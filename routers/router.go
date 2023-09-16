@@ -8,4 +8,5 @@ import (
 func SetupRouter(r *gin.Engine) {
 	todoGroup := r.Group("v1")
 	todoGroup.POST("/todo", controller.CreateTodo)
+	todoGroup.DELETE("/todo/:id", controller.DeleteTodoById)
 }

@@ -18,8 +18,17 @@ func CreateTodo(todo *Todo) error {
 	return err
 }
 
-func DeleteTodo(id uint) {
-
+func DeleteTodoById(id string) error {
+	var todo *Todo
+	if err := dao.Db.Where("id=?", id).First(&todo).Error; err != nil {
+		panic(err)
+		return err
+	}
+	if err := dao.Db.Model(&Todo{}).Where("id=?", id).Update("delete_time", time.Now()).Error; err != nil {
+		panic(err)
+		return err
+	}
+	return nil
 }
 
 func UpdateTodoById(id uint) {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"todo/dao"
 	"todo/models"
@@ -10,7 +9,7 @@ import (
 
 func main() {
 	if err := dao.ConnectMysql(); err != nil {
-		fmt.Println(err)
+		panic(err)
 		return
 	}
 	dao.Db.AutoMigrate(&models.Todo{})
