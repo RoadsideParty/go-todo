@@ -8,12 +8,8 @@ import (
 
 func CreateTodo(c *gin.Context) {
 	var todo models.Todo
-	if err := c.BindJSON(&todo); err != nil {
-		response.Fail(c, "添加失败，缺少参数")
-		return
-	}
-	if todo.Title == "" {
-		response.Fail(c, "title为必填项")
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		response.Fail(c, err.Error())
 		return
 	}
 	if err := models.CreateTodo(&todo); err != nil {
@@ -28,7 +24,7 @@ func DeleteTodoById(c *gin.Context) {
 	err := models.DeleteTodoById(id)
 	if err != nil {
 		response.Fail(c, "数据库错误")
-		return
+		panic(err)
 	}
 	response.Ok(c, nil)
 }

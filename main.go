@@ -10,11 +10,14 @@ import (
 func main() {
 	if err := dao.ConnectMysql(); err != nil {
 		panic(err)
-		return
 	}
-	dao.Db.AutoMigrate(&models.Todo{})
+	if err := dao.Db.AutoMigrate(&models.Todo{}); err != nil {
+		panic(err)
+	}
 	defer dao.Close()
 	r := gin.Default()
 	routers.SetupRouter(r)
-	r.Run(":8081")
+	if err := r.Run(":8081"); err != nil {
+		panic(err)
+	}
 }
