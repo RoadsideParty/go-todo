@@ -10,6 +10,10 @@ func CreateTodo(c *gin.Context) {
 	var todo models.Todo
 	if err := c.ShouldBindJSON(&todo); err != nil {
 		response.Fail(c, err.Error())
+		panic(err.Error())
+	}
+	if todo.Title == "" {
+		response.Fail(c, "title为必填项")
 		return
 	}
 	if err := models.CreateTodo(&todo); err != nil {
