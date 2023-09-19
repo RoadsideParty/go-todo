@@ -7,7 +7,7 @@ import (
 
 type Todo struct {
 	ID         uint      `json:"id" gorm:"primaryKey;autoIncrement"`
-	Title      string    `json:"title" gorm:"not null"`
+	Title      string    `json:"title" binding:"required" gorm:"not null"`
 	CreateTime time.Time `json:"create_time" gorm:"autoCreateTime;not null"`
 	UpdateTime time.Time `json:"update_time" gorm:"autoUpdateTime;not null"`
 	DeleteTime time.Time `json:"delete_time"`

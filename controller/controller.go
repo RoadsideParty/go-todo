@@ -8,9 +8,9 @@ import (
 
 func CreateTodo(c *gin.Context) {
 	var todo models.Todo
-	if err := c.BindJSON(&todo); err != nil {
-		response.Fail(c, "添加失败，缺少参数")
-		return
+	if err := c.ShouldBindJSON(&todo); err != nil {
+		response.Fail(c, err.Error())
+		panic(err.Error())
 	}
 	if todo.Title == "" {
 		response.Fail(c, "title为必填项")
